@@ -1,10 +1,6 @@
 package container;
 
 import javax.swing.*;
-
-import handler.JDBCConnection;
-import handler.ResultToTable;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.*;
@@ -18,7 +14,7 @@ public class LoginPage extends JPanel {
 	private JPanel buttonPanel, user_passPanel;
 	private String typedUsername, typedPassword;
 	private JButton confirmedLogInAdmin;
-	private Statement sqlstmt;
+	private Statement sqlstatement;
 	
 	public LoginPage() {
 		super();
