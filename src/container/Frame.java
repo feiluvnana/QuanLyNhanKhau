@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.sql.*;
 import java.awt.*;
 import java.awt.event.*;
+import com.formdev.flatlaf.*;
 
 public class Frame extends JFrame{
 	public JPanel screenPanel;				//Panel để hiện toàn bộ các nội dung trong ứng dụng
@@ -15,7 +16,7 @@ public class Frame extends JFrame{
 		super();
 		//Thiết lập LookAndFeel
 		try {
-			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+			UIManager.setLookAndFeel(new FlatLightLaf());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -28,7 +29,20 @@ public class Frame extends JFrame{
 		screenPanel.add("loginPage", loginPage);
 		//Thêm screenPanel vào frame, thiết lập frame
 		this.add(screenPanel);
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		this.addWindowListener(new WindowAdapter(){
+			public void windowClosing(WindowEvent e) {
+        		JFrame closingFrame = (JFrame)e.getSource();
+				int result = JOptionPane.showConfirmDialog(
+					(JFrame)e.getSource(),
+					"Are you sure you want to exit the application?",
+					"Exit Application",
+					JOptionPane.YES_NO_OPTION);
+ 
+        		if (result == JOptionPane.YES_OPTION)
+            		closingFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    		}
+		});
 		this.pack();
 		this.setResizable(false);
 		this.setVisible(true);

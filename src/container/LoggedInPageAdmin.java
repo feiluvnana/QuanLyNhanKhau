@@ -8,8 +8,8 @@ import feature.*;
 
 public class LoggedInPageAdmin extends JPanel{
 	private TraCuu traCuu;												//Cửa sổ tra cứu						
-	private ThayDoi thayDoi;											//Cửa sổ thay đổi hộ khẩu
-	private CapGiay capGiay;											//Cửa sổ cấp giấy
+	//private ThayDoi thayDoi;											//Cửa sổ thay đổi hộ khẩu
+	//private CapGiay capGiay;											//Cửa sổ cấp giấy
 	private JButton logOutButton, confirmedLogOut, 						//Các nút đăng xuất, xác nhận đăng xuất (ra hiệu cho Frame)
 	nutTraCuu, nutThayDoi, nutCapGiay, nutThongKe, backButton;			//Nút chọn tính năng và nút quay lại
 	private JPanel logOutPanel, screenPanel, featurePanel, backPanel;	//Panel cho nút đăng xuất, panel chứa featurePanel và các Panel tính năng

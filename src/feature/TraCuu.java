@@ -14,8 +14,6 @@ public class TraCuu extends JPanel {
 	private JPanel textFieldPanel, inputPanel, featurePanel;
 	
 	public TraCuu() {
-		//Dòng code này có vì bước thiết lập ActionListener không dùng được từ khóa this
-		TraCuu traCuu = this;
 		//Thiết lập nút tra cứu
 		nutTraCuu = new JButton("Tra Cứu");
 		nutTraCuu.addActionListener(new ActionListener() {
@@ -25,6 +23,9 @@ public class TraCuu extends JPanel {
 				String str = maSo.getText();
 				ResultSet rs = null;
 				try {
+					//Lấy thông tin về cửa sổ tra cứu để chuyển từ thẻ nhập liệu sang thẻ tính năng qua CardLayout
+					TraCuu traCuu = (TraCuu)((JButton)(e.getSource())).getParent();
+					
 					Connection conn = new JDBCConnection().getConnection(storage.URL.DB_URL, storage.URL.DB_USER, storage.URL.DB_PASS);
 					PreparedStatement pstatement = conn.prepareStatement("SELECT * FROM SoHoKhau WHERE MaSoHK = ?;");
 					pstatement.setString(1, str);
