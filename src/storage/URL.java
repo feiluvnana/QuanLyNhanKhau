@@ -1,11 +1,10 @@
 package storage;
 
+/**
+ * Class lưu trữ đường link tới (các) csdl
+ */
 public class URL {
-    public static final String QLNK_DB_URL = "jdbc:sqlserver://localhost:1433;databaseName=quanlynhankhau;integratedSecurity=true";
-    public static final String QLNK_DB_USER = "sa";
-    public static final String QLNK_DB_PASS = "1234567890";
-
-    public static final String LOGIN_DB_URL = "jdbc:sqlserver://localhost:1433;databaseName=quanlynhankhau;integratedSecurity=true";
-    public static final String LOGIN_DB_USER = "sa";
-    public static final String LOGIN_DB_PASS = "1234567890";
+    public static final String DB_URL = "jdbc:mysql://localhost:3306/quanlyhokhau";
+    public static final String DB_USER = "root";
+    public static final String DB_PASS = "";
 }
