@@ -34,7 +34,7 @@ public class TraCuu extends JPanel {
 		textFieldPanel.add(textFieldTitle);
 		textFieldPanel.add(maSo);
 		
-		titleLabel = new JLabel("Tra cứu hộ khẩu");
+		titleLabel = new JLabel("Tra Cứu Hộ Khẩu");
 		titleLabel.setHorizontalAlignment(JLabel.CENTER);
 		titleLabel.setFont(new Font("Arial", Font.BOLD, 30));
 		
