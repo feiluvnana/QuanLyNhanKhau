@@ -1,8 +1,6 @@
 package handler;
 
 import java.sql.*;
-import storage.URL;
-
 /**
  * Class hỗ trợ thiết lập kết nối với csdl
  */
