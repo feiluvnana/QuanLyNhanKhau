@@ -84,7 +84,7 @@ public class LoginPage extends JPanel {
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
-		gbc.gridx = 0; gbc.gridy = 0;  gbc.anchor = GridBagConstraints.WEST;
+		gbc.gridx = 0; gbc.gridy = 0; gbc.anchor = GridBagConstraints.WEST;
 		buttonPanel.add(showPassBox, gbc);
 		gbc.gridx = 0; gbc.gridy = 1; gbc.anchor = GridBagConstraints.CENTER;
 		buttonPanel.add(loginButton, gbc);

@@ -1,15 +1,16 @@
 package handler;
 
 import java.sql.*;
+import storage.URL;
 
 public class JDBCConnection {
 	public Connection getConnection() {
-		final String url = "jdbc:mysql://localhost:3306/loginInfo";
-		final String username = "root";
-		final String password = "";
-		
+		final String url = URL.QLNK_DB_URL;
+		final String username = "sa";
+		final String password = "1234567890";
+
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 		} catch (ClassNotFoundException e1) {
 			e1.printStackTrace();
 		}
