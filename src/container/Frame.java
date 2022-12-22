@@ -1,7 +1,6 @@
 package container;
 
 import javax.swing.*;
-import handler.ResultToTable;
 import java.sql.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -26,7 +25,7 @@ public class Frame extends JFrame{
 		screenPanel = new JPanel();
 		screenPanel.setPreferredSize(new Dimension(800,600));;
 		screenPanel.setLayout(new CardLayout());
-		screenPanel.add("loginpage", loginPage);
+		screenPanel.add("loginPage", loginPage);
 		
 		this.add(screenPanel);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -39,7 +38,7 @@ public class Frame extends JFrame{
 	public static void main(String[] args) {
 		Thread thread = new Thread() {
 			public void run() {
-				Frame ljf = new Frame();
+				Frame f = new Frame();
 			}
 		};
 		thread.start();
@@ -54,11 +53,10 @@ public class Frame extends JFrame{
 					try {
 						loggedInPageAdminInit();
 					} catch (SQLException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					screenPanel.add("loggedinpageadmin", loggedInPageAdmin);
-					((CardLayout) screenPanel.getLayout()).show(screenPanel, "loggedinpageadmin");
+					screenPanel.add("loggedInPageAdmin", loggedInPageAdmin);
+					((CardLayout) screenPanel.getLayout()).show(screenPanel, "loggedInPageAdmin");
 				}
 			}
 		});
@@ -71,8 +69,8 @@ public class Frame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				if(e.getSource() == loggedInPageAdmin.getConfirmedLogOut()) {
 					loginPageInit();
-					screenPanel.add("loginpage", loginPage);
-					((CardLayout) screenPanel.getLayout()).show(screenPanel, "loginpage");
+					screenPanel.add("loginPage", loginPage);
+					((CardLayout) screenPanel.getLayout()).show(screenPanel, "loginPage");
 				}
 			}
 		});

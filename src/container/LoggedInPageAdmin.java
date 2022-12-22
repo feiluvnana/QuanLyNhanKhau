@@ -29,7 +29,7 @@ public class LoggedInPageAdmin extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				backButton.setVisible(true);
-				((CardLayout) screenPanel.getLayout()).show(screenPanel, "tra cứu");
+				((CardLayout) screenPanel.getLayout()).show(screenPanel, "Tra Cứu");
 			}
 		});
 		nutThayDoi = new JButton("Thay Đổi"); 
@@ -56,8 +56,8 @@ public class LoggedInPageAdmin extends JPanel{
 		featurePanel.add(nutThongKe, gbc);
 		screenPanel = new JPanel();
 		screenPanel.setLayout(new CardLayout());
-		screenPanel.add("chọn", featurePanel);
-		screenPanel.add("tra cứu", traCuu);
+		screenPanel.add("Chọn", featurePanel);
+		screenPanel.add("Tra Cứu", traCuu);
 		
 		logOutButton = new JButton("Log out");
 		logOutButton.addActionListener(new ActionListener() {
@@ -77,8 +77,8 @@ public class LoggedInPageAdmin extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				backButton.setVisible(false);
-				((CardLayout) screenPanel.getLayout()).show(screenPanel, "chọn");
-			}	
+				((CardLayout) screenPanel.getLayout()).show(screenPanel, "Chọn");
+			}
 		});
 		backPanel = new JPanel();
 		backPanel.setLayout(new BorderLayout());
