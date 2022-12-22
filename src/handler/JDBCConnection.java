@@ -4,11 +4,7 @@ import java.sql.*;
 import storage.URL;
 
 public class JDBCConnection {
-	public Connection getConnection() {
-		final String url = URL.QLNK_DB_URL;
-		final String username = "sa";
-		final String password = "1234567890";
-
+	public Connection getConnection(String url, String username, String password) {
 		try {
 			Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 		} catch (ClassNotFoundException e1) {
