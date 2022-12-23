@@ -1,30 +1,38 @@
 package feature;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.sql.*;
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicArrowButton;
+
 import handler.*;
+import handler.Page.PageType;
 
 public class TraCuu extends JPanel {
-	private JButton nutTraCuu;
-	private JTextField maSo;
+	public static enum TYPE {TheoMaSo};
+	private JButton lookUpButton;
+	private JTextField householdNoTF;
 	private JLabel titleLabel, textFieldTitle;
-	private JPanel textFieldPanel, inputPanel, featurePanel;
+	private JPanel textFieldPanel, inputPanel, lookupPanel;
 	
 	public TraCuu() {
+		super();
+	}
+	
+	public TraCuu(TYPE type) {
+	if(type == TYPE.TheoMaSo) {
 		//Thiết lập nút tra cứu
-		nutTraCuu = new JButton("Tra Cứu");
-		nutTraCuu.addActionListener(new ActionListener() {
+		lookUpButton = new JButton("Tra Cứu");
+		lookUpButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//Khi ấn nút tra cứu, lấy mã số từ ô nhập mã số, sau đó tìm trong cơ sở dữ liệu
-				String str = maSo.getText();
+				String str = householdNoTF.getText();
 				ResultSet rs = null;
 				try {
 					//Lấy thông tin về cửa sổ tra cứu để chuyển từ thẻ nhập liệu sang thẻ tính năng qua CardLayout
-					TraCuu traCuu = (TraCuu)((JButton)(e.getSource())).getParent();
+					TraCuu traCuu = (TraCuu)((JPanel)((JButton)(e.getSource())).getParent()).getParent();
 					
 					Connection conn = new JDBCConnection().getConnection(storage.URL.DB_URL, storage.URL.DB_USER, storage.URL.DB_PASS);
 					PreparedStatement pstatement = conn.prepareStatement("SELECT * FROM SoHoKhau WHERE MaSoHK = ?;");
@@ -32,7 +40,7 @@ public class TraCuu extends JPanel {
 					rs = pstatement.executeQuery();
 					if(rs.next()) {
 						//Nếu đúng sẽ trả ra kết quả, đồng thời chuyển vào màn hình tính năng tra cứu
-						((CardLayout) traCuu.getLayout()).show(traCuu, "feature");
+						((CardLayout) traCuu.getLayout()).show(traCuu, "lookUp");
 					}
 					else
 						//Nếu không sẽ báo mã số sai
@@ -44,15 +52,15 @@ public class TraCuu extends JPanel {
 		});
 		
 		//Thiết lập ô nhập mã số
-		maSo = new JTextField();
-		maSo.setPreferredSize(new Dimension(200, 40));
+		householdNoTF = new JTextField();
+		householdNoTF.setPreferredSize(new Dimension(200, 40));
 		//Thiết lập nhãn của ô nhập mã số
 		textFieldTitle = new JLabel("Mã số:");
 		//Thêm ô nhập và nhãn vào 1 panel, dùng FlowLayout để sắp xếp
 		textFieldPanel = new JPanel();
 		textFieldPanel.setLayout(new FlowLayout());
 		textFieldPanel.add(textFieldTitle);
-		textFieldPanel.add(maSo);
+		textFieldPanel.add(householdNoTF);
 		//Thiết lập nhãn tiêu đề cho trang
 		titleLabel = new JLabel("Tra Cứu Hộ Khẩu");
 		titleLabel.setHorizontalAlignment(JLabel.CENTER);
@@ -67,13 +75,43 @@ public class TraCuu extends JPanel {
 		gbc.gridx = 0; gbc.gridy = 1;
 		inputPanel.add(textFieldPanel, gbc);
 		gbc.gridx = 0; gbc.gridy = 2;
-		inputPanel.add(nutTraCuu, gbc);
+		inputPanel.add(lookUpButton, gbc);
+
 		
-		//Thiết lập panel tính năng, tức là các tính năng sau khi tra cứu được 1 mã số
-		featurePanel = new JPanel();
+		//Thiết lập sổ hộ khẩu
+		Book book = new Book();
+		book.setOpaque(true);
+		Page title = new Page(PageType.COVER, null);
+		book.addPage(title);
+		Page page1 = new Page(PageType.HOUSEHOLDER, null);
+		book.addPage(page1);
+		//Thiết lập 2 phím mũi tên chuyển trang
+		BasicArrowButton leftButton = new BasicArrowButton(BasicArrowButton.WEST);
+		leftButton.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(1 < book.getCurrentPageNum() && book.getCurrentPageNum() <= book.getNumberOfPages())
+					book.showPage(book.getCurrentPageNum()-1);	
+			}
+		});
+		BasicArrowButton rightButton = new BasicArrowButton(BasicArrowButton.EAST);
+		rightButton.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(1 <= book.getCurrentPageNum() && book.getCurrentPageNum() < book.getNumberOfPages())
+					book.showPage(book.getCurrentPageNum()+1);	
+			}
+		});
+		//Thiết lập màn hình sau tra cứu, hiển thị sổ
+		lookupPanel = new JPanel();
+		lookupPanel.setLayout(new BorderLayout());
+		lookupPanel.add(leftButton, BorderLayout.WEST);
+		lookupPanel.add(book, BorderLayout.CENTER);
+		lookupPanel.add(rightButton, BorderLayout.EAST);
 		//Thêm các thẻ của panel nhập liệu và panel tính năng vào panel tổng TraCuu
 		this.setLayout(new CardLayout());
 		this.add("input", inputPanel);
-		this.add("feature", featurePanel);
+		this.add("lookUp", lookupPanel);
+	}
 	}
 }

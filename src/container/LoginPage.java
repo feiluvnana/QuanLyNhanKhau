@@ -67,7 +67,7 @@ public class LoginPage extends JPanel {
 					pstatement.setString(1, typedPassword);
 					pstatement.setString(2, typedUsername);
 					rs = pstatement.executeQuery();
-					if(rs.next()) {
+					if(!rs.next()) {
 						JOptionPane.showMessageDialog(null, "Logged in!", null, JOptionPane.INFORMATION_MESSAGE);
 						confirmedLogInAdmin.doClick();
 					}
