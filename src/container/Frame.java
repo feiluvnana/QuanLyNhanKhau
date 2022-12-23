@@ -6,10 +6,15 @@ import java.awt.*;
 import java.awt.event.*;
 import com.formdev.flatlaf.*;
 
+import feature.TraCuu;
+
 public class Frame extends JFrame{
+	Frame frame;
 	public JPanel screenPanel;				//Panel để hiện toàn bộ các nội dung trong ứng dụng
-	LoggedInPageAdmin loggedInPageAdmin;	//Panel để hiện toàn bộ nội dung trong khi đang trong phiên
 	LoginPage loginPage;					//Panel để hiện cửa sổ đăng nhập
+	JMenuBar menuBar;
+
+	TraCuu traCuu;
 	
 	public Frame()
 	{				
@@ -21,24 +26,49 @@ public class Frame extends JFrame{
 			e.printStackTrace();
 		}
 
+		
+		JButton logOutButton = new JButton("Đăng xuất");
+		logOutButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int result = JOptionPane.showConfirmDialog(getRootPane(), "Bạn có chắc muốn đăng xuất?", "Đăng xuất", JOptionPane.YES_NO_OPTION);
+        		if (result == JOptionPane.YES_OPTION) {
+					((CardLayout) screenPanel.getLayout()).show(screenPanel, "loginPage");
+					getRootPane().setJMenuBar(null);
+				}
+			}		
+		});
+		JMenuItem menuTraCuuTheoMaSo = new JMenuItem("Tra cứu theo mã số");
+		menuTraCuuTheoMaSo.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				traCuu = new TraCuu(TraCuu.TYPE.TheoMaSo);
+				screenPanel.add(traCuu, "traCuu");
+				((CardLayout) screenPanel.getLayout()).show(screenPanel, "traCuu");
+			}
+			
+		});
+		JMenu menuTraCuu = new JMenu("Tra Cứu");
+		menuTraCuu.add(menuTraCuuTheoMaSo);
+		menuBar = new JMenuBar();
+		menuBar.setPreferredSize(new Dimension(800,30));
+		menuBar.add(menuTraCuu);
+		menuBar.add(Box.createHorizontalGlue());
+		menuBar.add(logOutButton);
 		loginPageInit();
 		//Thiết lập screenPanel
 		screenPanel = new JPanel();
-		screenPanel.setPreferredSize(new Dimension(800,600));;
+		screenPanel.setPreferredSize(new Dimension(800,600));
 		screenPanel.setLayout(new CardLayout());
 		screenPanel.add("loginPage", loginPage);
+		screenPanel.add("blank", new JPanel());
 		//Thêm screenPanel vào frame, thiết lập frame
 		this.add(screenPanel);
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e) {
         		JFrame closingFrame = (JFrame)e.getSource();
-				int result = JOptionPane.showConfirmDialog(
-					(JFrame)e.getSource(),
-					"Are you sure you want to exit the application?",
-					"Exit Application",
-					JOptionPane.YES_NO_OPTION);
- 
+				int result = JOptionPane.showConfirmDialog((JFrame)e.getSource(), "Bạn có chắc muốn thoát ứng dụng?", "Thoát", JOptionPane.YES_NO_OPTION);
         		if (result == JOptionPane.YES_OPTION)
             		closingFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     		}
@@ -67,35 +97,9 @@ public class Frame extends JFrame{
 		loginPage.getConfirmedLogIn().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//Nếu nút xác nhận đăng nhập của loginPage được ấn, khởi tạo loggedInPage, sau đó chuyển màn hình sang loggedInPage
-				if(e.getSource() == loginPage.getConfirmedLogIn()) {
-					try {
-						loggedInPageAdminInit();
-					} catch (SQLException e1) {
-						e1.printStackTrace();
-					}
-					screenPanel.add("loggedInPageAdmin", loggedInPageAdmin);
-					((CardLayout) screenPanel.getLayout()).show(screenPanel, "loggedInPageAdmin");
-				}
-			}
-		});
-	}
-	
-	/**
-	 * Hàm để khởi tạo loggedInPage
-	 */
-	public void loggedInPageAdminInit() throws SQLException {
-		loggedInPageAdmin = new LoggedInPageAdmin();
-		loggedInPageAdmin.getConfirmedLogOut().addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				//Nếu nút xác nhận đăng xuất của loggedInPage được ấn, khởi tạo lại loginPage, sau đó chuyển màn hình sang loginPage
-				if(e.getSource() == loggedInPageAdmin.getConfirmedLogOut()) {
-					loginPageInit();
-					screenPanel.add("loginPage", loginPage);
-					((CardLayout) screenPanel.getLayout()).show(screenPanel, "loginPage");
-				}
-			}
+				((CardLayout) screenPanel.getLayout()).show(screenPanel, "blank");
+				getRootPane().setJMenuBar(menuBar);
+			}	
 		});
 	}
 }
