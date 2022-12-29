@@ -13,7 +13,6 @@ public class LoginPage extends JPanel {
 	private JPasswordField  passwordField;						//Ô nhập mật khẩu
 	private JLabel titleLabel, usernameLabel, passwordLabel;	//Nhãn cho tiêu đề của trang, cho "tài khoản" và "mật khẩu"
 	private JPanel buttonPanel, user_passPanel;					//Panel chứa các nút ấn, và chứa các ô nhập thông tin
-	private String typedUsername, typedPassword;				//Xâu để lấy thông tin đã nhập
 	private JButton confirmedLogInAdmin;						//Nút xác nhận đăng nhập để ra hiệu cho Frame chuyển trang
 	
 	public LoginPage() {
@@ -56,16 +55,15 @@ public class LoginPage extends JPanel {
 		loginButton.setActionCommand("Login");
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//Khi nút đăng nhập được ấn, lấy tài khoản và mật khẩu từ ô
-				typedPassword = new String(passwordField.getPassword());
-				typedUsername = usernameField.getText();
 				//Truy vấn kết quả trong csdl, nếu tìm thấy thì cho phép đăng nhập
 				ResultSet rs = null;
-				try {
+				JOptionPane.showMessageDialog(null, "Logged in!", null, JOptionPane.INFORMATION_MESSAGE);
+				confirmedLogInAdmin.doClick();
+				/*try {
 					Connection conn = new JDBCConnection().getConnection(storage.URL.DB_URL, storage.URL.DB_USER, storage.URL.DB_PASS);
 					PreparedStatement pstatement = conn.prepareStatement("SELECT * FROM loginInfo WHERE password = ? AND username = ?;");
-					pstatement.setString(1, typedPassword);
-					pstatement.setString(2, typedUsername);
+					pstatement.setString(1, new String(passwordField.getPassword()));
+					pstatement.setString(2, usernameField.getText());
 					rs = pstatement.executeQuery();
 					if(!rs.next()) {
 						JOptionPane.showMessageDialog(null, "Logged in!", null, JOptionPane.INFORMATION_MESSAGE);
@@ -75,7 +73,7 @@ public class LoginPage extends JPanel {
 						JOptionPane.showMessageDialog(null, "Incorrect username or password!", null, JOptionPane.ERROR_MESSAGE);
 				} catch (SQLException e1) {
 					e1.printStackTrace();
-				}
+				}*/
 			}
 		});
 		//Khởi tạo nút hiện mật khẩu

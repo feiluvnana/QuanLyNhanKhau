@@ -38,6 +38,7 @@ public class Frame extends JFrame{
 				}
 			}		
 		});
+		//Item for Tra Cứu
 		JMenuItem menuTraCuuTheoMaSo = new JMenuItem("Tra cứu theo mã số");
 		menuTraCuuTheoMaSo.addActionListener(new ActionListener(){
 			@Override
@@ -48,11 +49,39 @@ public class Frame extends JFrame{
 			}
 			
 		});
+		//Menu Tra Cứu
 		JMenu menuTraCuu = new JMenu("Tra Cứu");
 		menuTraCuu.add(menuTraCuuTheoMaSo);
+		
+		//Item for Thay Đổi
+		JMenuItem menuThemNhanKhau = new JMenuItem("Thêm nhân khẩu");
+		JMenuItem menuTachHoKhau = new JMenuItem("Tách hộ khẩu");
+		JMenuItem menuBaoTu = new JMenuItem("Báo tử");
+		//Menu Thay Đổi
+		JMenu menuThayDoi = new JMenu("Thay Đổi");
+		menuThayDoi.add(menuThemNhanKhau);
+		menuThayDoi.add(menuTachHoKhau);
+		menuThayDoi.add(menuBaoTu);
+		
+		//Item for Cấp Giấy
+		JMenuItem menuCapGiayTamTru = new JMenuItem("Cấp giấy tạm trú");
+		JMenuItem menuCapGiayTamVang = new JMenuItem("Cấp giấy tạm vắng");
+		//Menu Cấp Giấy
+		JMenu menuCapGiay = new JMenu("Cấp Giấy");
+		menuCapGiay.add(menuCapGiayTamTru);
+		menuCapGiay.add(menuCapGiayTamVang);
+
+		//Item for Thống Kê
+		//Menu Thống Kê
+		JMenu menuThongKe = new JMenu("Thống Kê");
+		
+		//MenuBar
 		menuBar = new JMenuBar();
 		menuBar.setPreferredSize(new Dimension(800,30));
 		menuBar.add(menuTraCuu);
+		menuBar.add(menuThayDoi);
+		menuBar.add(menuCapGiay);
+		menuBar.add(menuThongKe);
 		menuBar.add(Box.createHorizontalGlue());
 		menuBar.add(logOutButton);
 		loginPageInit();
