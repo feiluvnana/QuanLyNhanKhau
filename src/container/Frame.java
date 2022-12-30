@@ -4,16 +4,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import com.formdev.flatlaf.*;
-
-import feature.TraCuu;
+import feature.*;
 
 public class Frame extends JFrame{
-	Frame frame;
-	public JPanel screenPanel;				//Panel để hiện toàn bộ các nội dung trong ứng dụng
-	LoginPage loginPage;					//Panel để hiện cửa sổ đăng nhập
+	JPanel screenPanel;
+	LoginPage loginPage;					
 	JMenuBar menuBar;
-
 	TraCuu traCuu;
+	BienDoi bienDoi;
+	ThongKe thongKe;
 	
 	public Frame()
 	{				
@@ -24,6 +23,8 @@ public class Frame extends JFrame{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		UIManager.put("OptionPane.yesButtonText", "Có");
+		UIManager.put("OptionPane.noButtonText", "Không");
 
 		//MenuBar
 		menuBar = new JMenuBar();
@@ -51,6 +52,14 @@ public class Frame extends JFrame{
 				//Item for Biến Đổi
 				JMenuItem menuThemNhanKhau = new JMenuItem("Thêm nhân khẩu");
 				menuBienDoi.add(menuThemNhanKhau);
+				menuThemNhanKhau.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						bienDoi = new BienDoi(BienDoi.TYPE.Them);
+						screenPanel.add(bienDoi, "bienDoi");
+						((CardLayout) screenPanel.getLayout()).show(screenPanel, "bienDoi");	
+					}
+				});
 				JMenuItem menuLoaiNhanKhau = new JMenuItem("Loại nhân khẩu");
 				menuBienDoi.add(menuLoaiNhanKhau);
 				JMenuItem menuTachHoKhau = new JMenuItem("Tách hộ khẩu");
@@ -95,15 +104,15 @@ public class Frame extends JFrame{
 
 		loginPageInit();
 
-		//Thiết lập screenPanel và thêm vào frame
+		//Thiết lập screenPanel
 		screenPanel = new JPanel();
-		add(screenPanel);
 		screenPanel.setPreferredSize(new Dimension(800,600));
 		screenPanel.setLayout(new CardLayout());
 		screenPanel.add("loginPage", loginPage);
 		screenPanel.add("blank", new JPanel());
 		
-		//Thiết lập frame
+		//Thiết lập frame, thêm các panel cần thiết vào
+		this.add(screenPanel);
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e) {

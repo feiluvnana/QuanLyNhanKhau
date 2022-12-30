@@ -4,9 +4,9 @@ import javax.swing.*;
 import java.sql.*;
 
 public class Page extends JLabel{
-    public enum PageType {COVER, HOUSEHOLDER, MEMBER};
-    public Page(PageType type, ResultSet rs) {
-        if(type == PageType.COVER) {
+    public enum TYPE {COVER, HOUSEHOLDER, MEMBER};
+    public Page(TYPE type, ResultSet rs) {
+        if(type == TYPE.COVER) {
             String text = new String();
             text += "<html>";
             text += "<div style=\"width:590px;\">";
@@ -22,7 +22,7 @@ public class Page extends JLabel{
             this.setText(text);
             this.setVerticalAlignment(JLabel.TOP);
         }
-        else if(type == PageType.HOUSEHOLDER) {
+        else if(type == TYPE.HOUSEHOLDER) {
             String text = new String();
             text += "<html>";
             text += "<div style=\"width:590px;\">";
