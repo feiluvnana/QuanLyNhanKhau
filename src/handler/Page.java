@@ -1,7 +1,6 @@
 package handler;
 
 import javax.swing.*;
-import java.awt.*;
 import java.sql.*;
 
 public class Page extends JLabel{
