@@ -1,7 +1,6 @@
 package container;
 
 import javax.swing.*;
-import java.sql.*;
 import java.awt.*;
 import java.awt.event.*;
 import com.formdev.flatlaf.*;
@@ -38,52 +37,78 @@ public class Frame extends JFrame{
 				}
 			}		
 		});
-		//Item for Tra Cứu
-		JMenuItem menuTraCuuTheoMaSo = new JMenuItem("Tra cứu theo mã số");
-		menuTraCuuTheoMaSo.addActionListener(new ActionListener(){
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				traCuu = new TraCuu(TraCuu.TYPE.TheoMaSo);
-				screenPanel.add(traCuu, "traCuu");
-				((CardLayout) screenPanel.getLayout()).show(screenPanel, "traCuu");
-			}
-			
-		});
-		//Menu Tra Cứu
-		JMenu menuTraCuu = new JMenu("Tra Cứu");
-		menuTraCuu.add(menuTraCuuTheoMaSo);
-		
-		//Item for Thay Đổi
-		JMenuItem menuThemNhanKhau = new JMenuItem("Thêm nhân khẩu");
-		JMenuItem menuTachHoKhau = new JMenuItem("Tách hộ khẩu");
-		JMenuItem menuBaoTu = new JMenuItem("Báo tử");
-		//Menu Thay Đổi
-		JMenu menuThayDoi = new JMenu("Thay Đổi");
-		menuThayDoi.add(menuThemNhanKhau);
-		menuThayDoi.add(menuTachHoKhau);
-		menuThayDoi.add(menuBaoTu);
-		
-		//Item for Cấp Giấy
-		JMenuItem menuCapGiayTamTru = new JMenuItem("Cấp giấy tạm trú");
-		JMenuItem menuCapGiayTamVang = new JMenuItem("Cấp giấy tạm vắng");
-		//Menu Cấp Giấy
-		JMenu menuCapGiay = new JMenu("Cấp Giấy");
-		menuCapGiay.add(menuCapGiayTamTru);
-		menuCapGiay.add(menuCapGiayTamVang);
 
-		//Item for Thống Kê
-		//Menu Thống Kê
-		JMenu menuThongKe = new JMenu("Thống Kê");
-		
 		//MenuBar
 		menuBar = new JMenuBar();
 		menuBar.setPreferredSize(new Dimension(800,30));
-		menuBar.add(menuTraCuu);
-		menuBar.add(menuThayDoi);
+		//Menu and Item for MenuBar
+			//Menu Tra Cứu
+			JMenu menuTraCuu = new JMenu("Tra Cứu");
+			menuBar.add(menuTraCuu);
+				//Item for Tra Cứu
+				JMenuItem menuTraCuuTheoMaSo = new JMenuItem("Tra cứu theo mã số");
+				menuTraCuu.add(menuTraCuuTheoMaSo);
+				menuTraCuuTheoMaSo.addActionListener(new ActionListener(){
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						traCuu = new TraCuu(TraCuu.TYPE.TheoMaSo);
+						screenPanel.add(traCuu, "traCuu");
+						((CardLayout) screenPanel.getLayout()).show(screenPanel, "traCuu");
+					}
+				});
+				//End Item for Tra Cứu
+		
+			//Menu Biến Đổi
+			JMenu menuBienDoi = new JMenu("HĐ Biến Đổi");
+			menuBar.add(menuBienDoi);
+			//Item and menu for Biến Đổi
+				//Menu ThemNhanKhau
+				JMenu menuThemNhanKhau = new JMenu("Thêm nhân khẩu");
+				menuBienDoi.add(menuThemNhanKhau);
+					//Item for ThemNhanKhau
+					JMenuItem menuTamTru = new JMenuItem("Tạm trú");
+					menuThemNhanKhau.add(menuTamTru);
+					JMenuItem menuRaDoi = new JMenuItem("Mới ra đời");
+					menuThemNhanKhau.add(menuTamTru);
+					JMenuItem menuChuyenToi = new JMenuItem("Chuyển tới");
+					menuThemNhanKhau.add(menuTamTru);
+					//End item for ThemNhanKhau
+				//Menu LoaiNhanKhau
+				JMenu menuLoaiNhanKhau = new JMenu("Loại nhân khẩu");
+				menuBienDoi.add(menuLoaiNhanKhau);
+					//Item for LoaiNhanKhau
+					JMenuItem menuTamVang = new JMenuItem("Tạm vắng");
+					menuLoaiNhanKhau.add(menuTamVang);
+					JMenuItem menuChuyenDi = new JMenuItem("Chuyển đi");
+					menuLoaiNhanKhau.add(menuChuyenDi);
+					JMenuItem menuQuaDoi = new JMenuItem("Qua đời");
+					menuLoaiNhanKhau.add(menuChuyenDi);
+					//End item for LoaiNhanKhau
+				JMenuItem menuTachHoKhau = new JMenuItem("Tách hộ khẩu");
+				menuBienDoi.add(menuTachHoKhau);
+				JMenuItem menuXoaNhanKhau = new JMenuItem("Xóa nhân khẩu");
+				menuBienDoi.add(menuXoaNhanKhau);
+				JMenuItem menuDoiChuHo = new JMenuItem("Đổi chủ hộ");
+				menuBienDoi.add(menuDoiChuHo);
+			//End item and menu for Biến Đổi
+	
+		//Menu Cấp Giấy
+		JMenu menuCapGiay = new JMenu("Cấp Giấy");
 		menuBar.add(menuCapGiay);
+			//Item for Cấp Giấy
+			JMenuItem menuCapGiayTamTru = new JMenuItem("Cấp giấy tạm trú");
+			menuCapGiay.add(menuCapGiayTamTru);
+			JMenuItem menuCapGiayTamVang = new JMenuItem("Cấp giấy tạm vắng");
+			menuCapGiay.add(menuCapGiayTamVang);
+			//End Item for Cấp Giấy
+
+		
+		//Menu Thống Kê
+		JMenu menuThongKe = new JMenu("Thống Kê");
 		menuBar.add(menuThongKe);
-		menuBar.add(Box.createHorizontalGlue());
-		menuBar.add(logOutButton);
+			//Item for Thống Kê
+			//End Item for Thống Kê
+		
 		loginPageInit();
 		//Thiết lập screenPanel
 		screenPanel = new JPanel();
@@ -91,6 +116,7 @@ public class Frame extends JFrame{
 		screenPanel.setLayout(new CardLayout());
 		screenPanel.add("loginPage", loginPage);
 		screenPanel.add("blank", new JPanel());
+		
 		//Thêm screenPanel vào frame, thiết lập frame
 		this.add(screenPanel);
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -128,7 +154,7 @@ public class Frame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				((CardLayout) screenPanel.getLayout()).show(screenPanel, "blank");
 				getRootPane().setJMenuBar(menuBar);
-			}	
+			}
 		});
 	}
 }
