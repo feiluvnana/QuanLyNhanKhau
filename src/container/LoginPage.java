@@ -7,93 +7,79 @@ import java.awt.event.*;
 import java.sql.*;
 
 public class LoginPage extends JPanel {
-	private JButton loginButton;								//Nút đăng nhập
-	private JCheckBox showPassBox;								//Nút hiển thị mật khẩu
-	private JTextField usernameField;							//Ô nhập tài khoản
-	private JPasswordField  passwordField;						//Ô nhập mật khẩu
-	private JLabel titleLabel, usernameLabel, passwordLabel;	//Nhãn cho tiêu đề của trang, cho "tài khoản" và "mật khẩu"
-	private JPanel buttonPanel, user_passPanel;					//Panel chứa các nút ấn, và chứa các ô nhập thông tin
-	private JButton confirmedLogInAdmin;						//Nút xác nhận đăng nhập để ra hiệu cho Frame chuyển trang
 	
+	JButton confirmedLogInButton;
+
 	public LoginPage() {
 		super();
 
-		confirmedLogInAdmin = new JButton();
+		confirmedLogInButton = new JButton();
 		
 		//Thiết lập tiêu đề trang
-		titleLabel = new JLabel("LOGIN");
+		JLabel titleLabel = new JLabel("ĐĂNG NHẬP");
 		titleLabel.setHorizontalAlignment(JLabel.CENTER);
 		titleLabel.setFont(new Font("Times New Roman", Font.BOLD, 40));
-		//Thiết lập ô nhập tài khoản
-		usernameField = new JTextField();
-		usernameField.setPreferredSize(new Dimension(180, 30));
-		//Thiết lập ô nhập mật khẩu
-		passwordField = new JPasswordField();
-		passwordField.setPreferredSize(new Dimension(180, 30));
-		passwordField.setEchoChar('*');
-		//Thiết lập nhãn tài khoản
-		usernameLabel = new JLabel("Username:");
-		//Thiết lập nhãn mật khẩu
-		passwordLabel = new JLabel("Password:");
+		
 		//Cho các ô nhập thông tin và nhãn vào user_passPanel, sắp xếp bằng GridBagLayout
-		user_passPanel = new JPanel();
+		JPanel user_passPanel = new JPanel();	
+		user_passPanel.setBackground(Color.gray);
 		user_passPanel.setLayout(new GridBagLayout());
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.insets = new Insets(5,5,5,5);
-		gbc.gridx = 0; gbc.gridy = 0;
-		user_passPanel.add(usernameLabel, gbc);
-		gbc.gridx = 0; gbc.gridy = 1;
-		user_passPanel.add(passwordLabel, gbc);
-		gbc.gridx = 1; gbc.gridy = 0;
-		user_passPanel.add(usernameField, gbc);
-		gbc.gridx = 1; gbc.gridy = 1;
-		user_passPanel.add(passwordField, gbc);
-		user_passPanel.setBackground(Color.gray);
-		//Khởi tạo nút đăng nhập
-		loginButton = new JButton("Login");
-		loginButton.setPreferredSize(new Dimension(180, 30));
-		loginButton.setActionCommand("Login");
-		loginButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				//Truy vấn kết quả trong csdl, nếu tìm thấy thì cho phép đăng nhập
-				ResultSet rs = null;
-				JOptionPane.showMessageDialog(null, "Logged in!", null, JOptionPane.INFORMATION_MESSAGE);
-				confirmedLogInAdmin.doClick();
-				/*try {
-					Connection conn = new JDBCConnection().getConnection(storage.URL.DB_URL, storage.URL.DB_USER, storage.URL.DB_PASS);
-					PreparedStatement pstatement = conn.prepareStatement("SELECT * FROM loginInfo WHERE password = ? AND username = ?;");
-					pstatement.setString(1, new String(passwordField.getPassword()));
-					pstatement.setString(2, usernameField.getText());
-					rs = pstatement.executeQuery();
-					if(!rs.next()) {
-						JOptionPane.showMessageDialog(null, "Logged in!", null, JOptionPane.INFORMATION_MESSAGE);
-						confirmedLogInAdmin.doClick();
-					}
-					else
-						JOptionPane.showMessageDialog(null, "Incorrect username or password!", null, JOptionPane.ERROR_MESSAGE);
-				} catch (SQLException e1) {
-					e1.printStackTrace();
-				}*/
-			}
-		});
-		//Khởi tạo nút hiện mật khẩu
-		showPassBox = new JCheckBox("Show password");
-		showPassBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if(showPassBox.isSelected())
-					passwordField.setEchoChar((char) 0);
-				else
-					passwordField.setEchoChar('*');
-			}		
-		});
+			//Các component của user_passPanel
+			JLabel usernameLabel = new JLabel("Username:");
+			gbc.gridx = 0; gbc.gridy = 0; user_passPanel.add(usernameLabel, gbc);
+			JLabel passwordLabel = new JLabel("Password:");
+			gbc.gridx = 0; gbc.gridy = 1; user_passPanel.add(passwordLabel, gbc);
+			JTextField usernameField = new JTextField();
+			gbc.gridx = 1; gbc.gridy = 0; user_passPanel.add(usernameField, gbc);
+			usernameField.setPreferredSize(new Dimension(180, 30));
+			JPasswordField passwordField = new JPasswordField();
+			gbc.gridx = 1; gbc.gridy = 1; user_passPanel.add(passwordField, gbc);
+			passwordField.setPreferredSize(new Dimension(180, 30));
+			passwordField.setEchoChar('*');
+			//End các component của user_passPanel
+		
 		//Cho các nút vào buttonPanel, sắp xếp bằng GridBagLayout
-		buttonPanel = new JPanel();
+		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridBagLayout());
 		gbc = new GridBagConstraints();
-		gbc.gridx = 0; gbc.gridy = 0; gbc.anchor = GridBagConstraints.WEST;
-		buttonPanel.add(showPassBox, gbc);
-		gbc.gridx = 0; gbc.gridy = 1; gbc.anchor = GridBagConstraints.CENTER;
-		buttonPanel.add(loginButton, gbc);
+			//Các component của buttonPanel
+			JCheckBox showPassBox = new JCheckBox("Show password");
+			gbc.gridx = 0; gbc.gridy = 0; gbc.anchor = GridBagConstraints.WEST; buttonPanel.add(showPassBox, gbc);
+			showPassBox.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if(showPassBox.isSelected())
+						passwordField.setEchoChar((char) 0);
+					else
+						passwordField.setEchoChar('*');
+				}		
+			});
+			JButton loginButton = new JButton("Login");
+			gbc.gridx = 0; gbc.gridy = 1; gbc.anchor = GridBagConstraints.CENTER; buttonPanel.add(loginButton, gbc);
+			loginButton.setPreferredSize(new Dimension(180, 30));
+			loginButton.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					//Truy vấn kết quả trong csdl, nếu tìm thấy thì cho phép đăng nhập
+					confirmedLogInButton.doClick();
+					/*ResultSet rs = null;
+					try {
+						Connection conn = new JDBCConnection().getConnection(storage.URL.DB_URL, storage.URL.DB_USER, storage.URL.DB_PASS);
+						PreparedStatement pstatement = conn.prepareStatement("SELECT * FROM loginInfo WHERE password = ? AND username = ?;");
+						pstatement.setString(1, new String(passwordField.getPassword()));
+						pstatement.setString(2, usernameField.getText());
+						rs = pstatement.executeQuery();
+						if(!rs.next()) {
+							JOptionPane.showMessageDialog(null, "Đã đăng nhập!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+							confirmedLogInButton.doClick();
+						} else
+							JOptionPane.showMessageDialog(null, "Sai tài khoản hoặc mật khẩu!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+					} catch (SQLException e1) {
+						e1.printStackTrace();
+					}*/
+				}
+			});
+			//End các component của buttonPanel
 		
 		//Cho các panel vào trang đăng nhập LoginPage, sắp xếp bằng GridLayout
 		this.setLayout(new GridLayout(5,1));
@@ -109,6 +95,6 @@ public class LoginPage extends JPanel {
 	 * @return confirmedLogInAdmin
 	 */
 	public JButton getConfirmedLogIn() {
-		return confirmedLogInAdmin;
+		return confirmedLogInButton;
 	}
 }
