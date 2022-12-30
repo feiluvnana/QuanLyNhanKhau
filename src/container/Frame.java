@@ -48,36 +48,18 @@ public class Frame extends JFrame{
 			//Menu Biến Đổi
 			JMenu menuBienDoi = new JMenu("HĐ Biến Đổi");
 			menuBar.add(menuBienDoi);
-				//Item and menu for Biến Đổi
-				//Menu ThemNhanKhau
-				JMenu menuThemNhanKhau = new JMenu("Thêm nhân khẩu");
+				//Item for Biến Đổi
+				JMenuItem menuThemNhanKhau = new JMenuItem("Thêm nhân khẩu");
 				menuBienDoi.add(menuThemNhanKhau);
-					//Item for ThemNhanKhau
-					JMenuItem menuTamTru = new JMenuItem("Tạm trú");
-					menuThemNhanKhau.add(menuTamTru);
-					JMenuItem menuRaDoi = new JMenuItem("Mới ra đời");
-					menuThemNhanKhau.add(menuRaDoi);
-					JMenuItem menuChuyenToi = new JMenuItem("Chuyển tới");
-					menuThemNhanKhau.add(menuChuyenToi);
-					//End item for ThemNhanKhau
-				//Menu LoaiNhanKhau
-				JMenu menuLoaiNhanKhau = new JMenu("Loại nhân khẩu");
+				JMenuItem menuLoaiNhanKhau = new JMenuItem("Loại nhân khẩu");
 				menuBienDoi.add(menuLoaiNhanKhau);
-					//Item for LoaiNhanKhau
-					JMenuItem menuTamVang = new JMenuItem("Tạm vắng");
-					menuLoaiNhanKhau.add(menuTamVang);
-					JMenuItem menuChuyenDi = new JMenuItem("Chuyển đi");
-					menuLoaiNhanKhau.add(menuChuyenDi);
-					JMenuItem menuQuaDoi = new JMenuItem("Qua đời");
-					menuLoaiNhanKhau.add(menuQuaDoi);
-					//End item for LoaiNhanKhau
 				JMenuItem menuTachHoKhau = new JMenuItem("Tách hộ khẩu");
 				menuBienDoi.add(menuTachHoKhau);
 				JMenuItem menuXoaNhanKhau = new JMenuItem("Xóa nhân khẩu");
 				menuBienDoi.add(menuXoaNhanKhau);
 				JMenuItem menuDoiChuHo = new JMenuItem("Đổi chủ hộ");
 				menuBienDoi.add(menuDoiChuHo);
-				//End item and menu for Biến Đổi
+				//End item for Biến Đổi
 	
 			//Menu Cấp Giấy
 			JMenu menuCapGiay = new JMenu("Cấp Giấy");
