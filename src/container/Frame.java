@@ -25,19 +25,6 @@ public class Frame extends JFrame{
 			e.printStackTrace();
 		}
 
-		
-		JButton logOutButton = new JButton("Đăng xuất");
-		logOutButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int result = JOptionPane.showConfirmDialog(getRootPane(), "Bạn có chắc muốn đăng xuất?", "Đăng xuất", JOptionPane.YES_NO_OPTION);
-        		if (result == JOptionPane.YES_OPTION) {
-					((CardLayout) screenPanel.getLayout()).show(screenPanel, "loginPage");
-					getRootPane().setJMenuBar(null);
-				}
-			}		
-		});
-
 		//MenuBar
 		menuBar = new JMenuBar();
 		menuBar.setPreferredSize(new Dimension(800,30));
@@ -61,7 +48,7 @@ public class Frame extends JFrame{
 			//Menu Biến Đổi
 			JMenu menuBienDoi = new JMenu("HĐ Biến Đổi");
 			menuBar.add(menuBienDoi);
-			//Item and menu for Biến Đổi
+				//Item and menu for Biến Đổi
 				//Menu ThemNhanKhau
 				JMenu menuThemNhanKhau = new JMenu("Thêm nhân khẩu");
 				menuBienDoi.add(menuThemNhanKhau);
@@ -69,9 +56,9 @@ public class Frame extends JFrame{
 					JMenuItem menuTamTru = new JMenuItem("Tạm trú");
 					menuThemNhanKhau.add(menuTamTru);
 					JMenuItem menuRaDoi = new JMenuItem("Mới ra đời");
-					menuThemNhanKhau.add(menuTamTru);
+					menuThemNhanKhau.add(menuRaDoi);
 					JMenuItem menuChuyenToi = new JMenuItem("Chuyển tới");
-					menuThemNhanKhau.add(menuTamTru);
+					menuThemNhanKhau.add(menuChuyenToi);
 					//End item for ThemNhanKhau
 				//Menu LoaiNhanKhau
 				JMenu menuLoaiNhanKhau = new JMenu("Loại nhân khẩu");
@@ -82,7 +69,7 @@ public class Frame extends JFrame{
 					JMenuItem menuChuyenDi = new JMenuItem("Chuyển đi");
 					menuLoaiNhanKhau.add(menuChuyenDi);
 					JMenuItem menuQuaDoi = new JMenuItem("Qua đời");
-					menuLoaiNhanKhau.add(menuChuyenDi);
+					menuLoaiNhanKhau.add(menuQuaDoi);
 					//End item for LoaiNhanKhau
 				JMenuItem menuTachHoKhau = new JMenuItem("Tách hộ khẩu");
 				menuBienDoi.add(menuTachHoKhau);
@@ -90,35 +77,51 @@ public class Frame extends JFrame{
 				menuBienDoi.add(menuXoaNhanKhau);
 				JMenuItem menuDoiChuHo = new JMenuItem("Đổi chủ hộ");
 				menuBienDoi.add(menuDoiChuHo);
-			//End item and menu for Biến Đổi
+				//End item and menu for Biến Đổi
 	
-		//Menu Cấp Giấy
-		JMenu menuCapGiay = new JMenu("Cấp Giấy");
-		menuBar.add(menuCapGiay);
-			//Item for Cấp Giấy
-			JMenuItem menuCapGiayTamTru = new JMenuItem("Cấp giấy tạm trú");
-			menuCapGiay.add(menuCapGiayTamTru);
-			JMenuItem menuCapGiayTamVang = new JMenuItem("Cấp giấy tạm vắng");
-			menuCapGiay.add(menuCapGiayTamVang);
-			//End Item for Cấp Giấy
+			//Menu Cấp Giấy
+			JMenu menuCapGiay = new JMenu("Cấp Giấy");
+			menuBar.add(menuCapGiay);
+				//Item for Cấp Giấy
+				JMenuItem menuCapGiayTamTru = new JMenuItem("Cấp giấy tạm trú");
+				menuCapGiay.add(menuCapGiayTamTru);
+				JMenuItem menuCapGiayTamVang = new JMenuItem("Cấp giấy tạm vắng");
+				menuCapGiay.add(menuCapGiayTamVang);
+				//End Item for Cấp Giấy
 
-		
-		//Menu Thống Kê
-		JMenu menuThongKe = new JMenu("Thống Kê");
-		menuBar.add(menuThongKe);
-			//Item for Thống Kê
-			//End Item for Thống Kê
-		
+			//Menu Thống Kê
+			JMenu menuThongKe = new JMenu("Thống Kê");
+			menuBar.add(menuThongKe);
+				//Item for Thống Kê
+				//End Item for Thống Kê
+			
+			//Nút đăng xuất
+			menuBar.add(Box.createHorizontalGlue());
+			JButton logOutButton = new JButton("Đăng xuất");
+			menuBar.add(logOutButton);
+			logOutButton.addActionListener(new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					int result = JOptionPane.showConfirmDialog(getRootPane(), "Bạn có chắc muốn đăng xuất?", "Đăng xuất", JOptionPane.YES_NO_OPTION);
+        			if (result == JOptionPane.YES_OPTION) {
+						((CardLayout) screenPanel.getLayout()).show(screenPanel, "loginPage");
+						getRootPane().setJMenuBar(null);
+					}
+				}		
+			});
+		//End Menu and Item for menuBar
+
 		loginPageInit();
-		//Thiết lập screenPanel
+
+		//Thiết lập screenPanel và thêm vào frame
 		screenPanel = new JPanel();
+		add(screenPanel);
 		screenPanel.setPreferredSize(new Dimension(800,600));
 		screenPanel.setLayout(new CardLayout());
 		screenPanel.add("loginPage", loginPage);
 		screenPanel.add("blank", new JPanel());
 		
-		//Thêm screenPanel vào frame, thiết lập frame
-		this.add(screenPanel);
+		//Thiết lập frame
 		this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(new WindowAdapter(){
 			public void windowClosing(WindowEvent e) {
