@@ -1,6 +1,9 @@
 package feature;
 
 import javax.swing.*;
+
+import handler.DatePicker;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -44,40 +47,27 @@ public class BienDoi extends JPanel {
                 moiRaDoi.setLayout(new GridLayout(10, 1));
                     //Item for moiRaDoi
                     JPanel line1 = new JPanel();
-                    moiRaDoi.add(line1);
                     line1.setLayout(new BoxLayout(line1, BoxLayout.X_AXIS));
                         //Item for line1
                         JLabel tieuDeHoTen = new JLabel("Họ và tên:");
                         line1.add(tieuDeHoTen);
                         JTextField hoTen = new JTextField();
-                        line1.add(hoTen);
                         hoTen.setMaximumSize(new Dimension(160,22));
+                        line1.add(hoTen);
                         //End item for line1
+                    moiRaDoi.add(line1);
                     JPanel line2 = new JPanel();
-                    moiRaDoi.add(line2);
                     line2.setLayout(new BoxLayout(line2, BoxLayout.X_AXIS));
+                    line2.setBackground(Color.RED);
                         //Item for line2
                         JLabel tieuDeNgaySinh = new JLabel("Ngày, tháng, năm sinh:");
                         line2.add(tieuDeNgaySinh);
-                        String[] ngay = new String[32];
-                        ngay[31] = "Chọn ngày";
-                        for(int i = 1; i <= 31; i++)
-                            ngay[i-1] = Integer.toString(i);
-                        JComboBox<String> chonNgay = new JComboBox<>(ngay);
+                        DatePicker chonNgay = new DatePicker();
                         line2.add(chonNgay);
-                        chonNgay.setSelectedIndex(31);
-                        chonNgay.setForeground(Color.GRAY);
-                        chonNgay.addActionListener(new ActionListener(){
-                            @Override
-                            public void actionPerformed(ActionEvent e) {
-                                if(!chonNgay.getSelectedItem().equals("Chọn ngày")) {
-                                    chonNgay.setForeground(Color.BLACK);  
-                                    lyDoThem.remove(31);
-                                }
-                            }
-                        });
+                        line2.add(Box.createHorizontalGlue());
                         //End item for line2
-                    JPanel line3 = new JPanel();
+                    moiRaDoi.add(line2);
+                JPanel line3 = new JPanel();
                     moiRaDoi.add(line3);
                     JPanel line4 = new JPanel();
                     moiRaDoi.add(line4);
