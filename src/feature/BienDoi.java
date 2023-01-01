@@ -3,8 +3,6 @@ package feature;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Properties;
-import handler.*;
 
 public class BienDoi extends JPanel {
     public static enum TYPE {Them, ThayDoi, Chuyen};
@@ -21,24 +19,20 @@ public class BienDoi extends JPanel {
                 JLabel tieuDeLyDoThem = new JLabel("Lý do thêm nhân khẩu:");
                 part1.add(tieuDeLyDoThem);
                 JComboBox<String> lyDoThem = new JComboBox<>(new String[] {"Chọn lý do", "Mới ra đời", "Chuyển tới", "Tạm trú"});
-                part1.add(lyDoThem);
                 lyDoThem.setForeground(Color.GRAY);
-                lyDoThem.addActionListener(new ActionListener(){
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if(lyDoThem.getSelectedItem().equals("Chọn lý do"))
-                            lyDoThem.setForeground(Color.GRAY);
-                        else  
-                            lyDoThem.setForeground(Color.BLACK);  
-                    }
-                });
+                lyDoThem.setSelectedItem("Chọn lý do");
                 lyDoThem.addItemListener(new ItemListener(){
                     @Override
                     public void itemStateChanged(ItemEvent e) {
-                        if(e.getItem() == lyDoThem.getItemAt(1))
+                        if(!lyDoThem.getSelectedItem().equals("Chọn lý do")) {
+                            lyDoThem.setForeground(Color.BLACK);  
+                            lyDoThem.removeItem("Chọn lý do");
+                        }
+                        if(e.getItem().equals("Mới ra đời"))
                             ((CardLayout) part2.getLayout()).show(part2, "moiRaDoi");   
                     }
                 });
+                part1.add(lyDoThem);
                 //End item for part1
    
             //Panel part2
@@ -47,7 +41,6 @@ public class BienDoi extends JPanel {
             part2.add(new JPanel(), "blank");
                 //Item for part2
                 JPanel moiRaDoi = new JPanel();
-                part2.add(moiRaDoi, "moiRaDoi");
                 moiRaDoi.setLayout(new GridLayout(10, 1));
                     //Item for moiRaDoi
                     JPanel line1 = new JPanel();
@@ -66,6 +59,23 @@ public class BienDoi extends JPanel {
                         //Item for line2
                         JLabel tieuDeNgaySinh = new JLabel("Ngày, tháng, năm sinh:");
                         line2.add(tieuDeNgaySinh);
+                        String[] ngay = new String[32];
+                        ngay[31] = "Chọn ngày";
+                        for(int i = 1; i <= 31; i++)
+                            ngay[i-1] = Integer.toString(i);
+                        JComboBox<String> chonNgay = new JComboBox<>(ngay);
+                        line2.add(chonNgay);
+                        chonNgay.setSelectedIndex(31);
+                        chonNgay.setForeground(Color.GRAY);
+                        chonNgay.addActionListener(new ActionListener(){
+                            @Override
+                            public void actionPerformed(ActionEvent e) {
+                                if(!chonNgay.getSelectedItem().equals("Chọn ngày")) {
+                                    chonNgay.setForeground(Color.BLACK);  
+                                    lyDoThem.remove(31);
+                                }
+                            }
+                        });
                         //End item for line2
                     JPanel line3 = new JPanel();
                     moiRaDoi.add(line3);
@@ -84,6 +94,7 @@ public class BienDoi extends JPanel {
                     JPanel line10 = new JPanel();
                     moiRaDoi.add(line10);
                     //End item for moiRaDoi
+                part2.add(moiRaDoi, "moiRaDoi");
                 JPanel chuyenToi = new JPanel();
                 part2.add(chuyenToi, "chuyenToi");
                 JPanel tamTru = new JPanel();

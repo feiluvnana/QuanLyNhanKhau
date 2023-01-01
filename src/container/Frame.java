@@ -32,7 +32,6 @@ public class Frame extends JFrame{
 		//Menu and Item for MenuBar
 			//Menu Tra Cứu
 			JMenu menuTraCuu = new JMenu("Tra Cứu");
-			menuBar.add(menuTraCuu);
 				//Item for Tra Cứu
 				JMenuItem menuTraCuuTheoMaSo = new JMenuItem("Tra cứu theo mã số");
 				menuTraCuu.add(menuTraCuuTheoMaSo);
@@ -45,10 +44,10 @@ public class Frame extends JFrame{
 					}
 				});
 				//End Item for Tra Cứu
+			menuBar.add(menuTraCuu);
 		
 			//Menu Biến Đổi
 			JMenu menuBienDoi = new JMenu("HĐ Biến Đổi");
-			menuBar.add(menuBienDoi);
 				//Item for Biến Đổi
 				JMenuItem menuThemNhanKhau = new JMenuItem("Thêm nhân khẩu");
 				menuBienDoi.add(menuThemNhanKhau);
@@ -69,27 +68,28 @@ public class Frame extends JFrame{
 				JMenuItem menuDoiChuHo = new JMenuItem("Đổi chủ hộ");
 				menuBienDoi.add(menuDoiChuHo);
 				//End item for Biến Đổi
+			menuBar.add(menuBienDoi);
 	
 			//Menu Cấp Giấy
 			JMenu menuCapGiay = new JMenu("Cấp Giấy");
-			menuBar.add(menuCapGiay);
 				//Item for Cấp Giấy
 				JMenuItem menuCapGiayTamTru = new JMenuItem("Cấp giấy tạm trú");
 				menuCapGiay.add(menuCapGiayTamTru);
 				JMenuItem menuCapGiayTamVang = new JMenuItem("Cấp giấy tạm vắng");
 				menuCapGiay.add(menuCapGiayTamVang);
 				//End Item for Cấp Giấy
+			menuBar.add(menuCapGiay);
 
 			//Menu Thống Kê
 			JMenu menuThongKe = new JMenu("Thống Kê");
-			menuBar.add(menuThongKe);
+			
 				//Item for Thống Kê
 				//End Item for Thống Kê
+			menuBar.add(menuThongKe);
 			
 			//Nút đăng xuất
 			menuBar.add(Box.createHorizontalGlue());
 			JButton logOutButton = new JButton("Đăng xuất");
-			menuBar.add(logOutButton);
 			logOutButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -100,6 +100,7 @@ public class Frame extends JFrame{
 					}
 				}		
 			});
+			menuBar.add(logOutButton);
 		//End Menu and Item for menuBar
 
 		loginPageInit();
