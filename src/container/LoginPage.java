@@ -32,12 +32,12 @@ public class LoginPage extends JPanel {
 			JLabel passwordLabel = new JLabel("Password:");
 			gbc.gridx = 0; gbc.gridy = 1; user_passPanel.add(passwordLabel, gbc);
 			JTextField usernameField = new JTextField();
-			gbc.gridx = 1; gbc.gridy = 0; user_passPanel.add(usernameField, gbc);
 			usernameField.setPreferredSize(new Dimension(180, 30));
+			gbc.gridx = 1; gbc.gridy = 0; user_passPanel.add(usernameField, gbc);
 			JPasswordField passwordField = new JPasswordField();
-			gbc.gridx = 1; gbc.gridy = 1; user_passPanel.add(passwordField, gbc);
 			passwordField.setPreferredSize(new Dimension(180, 30));
 			passwordField.setEchoChar('*');
+			gbc.gridx = 1; gbc.gridy = 1; user_passPanel.add(passwordField, gbc);
 			//End các component của user_passPanel
 		
 		//Cho các nút vào buttonPanel, sắp xếp bằng GridBagLayout
@@ -46,7 +46,6 @@ public class LoginPage extends JPanel {
 		gbc = new GridBagConstraints();
 			//Các component của buttonPanel
 			JCheckBox showPassBox = new JCheckBox("Show password");
-			gbc.gridx = 0; gbc.gridy = 0; gbc.anchor = GridBagConstraints.WEST; buttonPanel.add(showPassBox, gbc);
 			showPassBox.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if(showPassBox.isSelected())
@@ -55,8 +54,8 @@ public class LoginPage extends JPanel {
 						passwordField.setEchoChar('*');
 				}		
 			});
+			gbc.gridx = 0; gbc.gridy = 0; gbc.anchor = GridBagConstraints.WEST; buttonPanel.add(showPassBox, gbc);
 			JButton loginButton = new JButton("Login");
-			gbc.gridx = 0; gbc.gridy = 1; gbc.anchor = GridBagConstraints.CENTER; buttonPanel.add(loginButton, gbc);
 			loginButton.setPreferredSize(new Dimension(180, 30));
 			loginButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -79,6 +78,7 @@ public class LoginPage extends JPanel {
 					}*/
 				}
 			});
+			gbc.gridx = 0; gbc.gridy = 1; gbc.anchor = GridBagConstraints.CENTER; buttonPanel.add(loginButton, gbc);
 			//End các component của buttonPanel
 		
 		//Cho các panel vào trang đăng nhập LoginPage, sắp xếp bằng GridLayout

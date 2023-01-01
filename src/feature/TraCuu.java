@@ -22,16 +22,15 @@ public class TraCuu extends JPanel {
 		gbc.insets = new Insets(10,10,10,10);
 			//Các component của inputPanel
 			JLabel titleLabel = new JLabel("Tra Cứu Hộ Khẩu");
-			gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2; gbc.weightx = 1; inputPanel.add(titleLabel, gbc);
 			titleLabel.setHorizontalAlignment(JLabel.CENTER);
 			titleLabel.setFont(new Font("Arial", Font.BOLD, 30));
+			gbc.gridx = 0; gbc.gridy = 0; gbc.gridwidth = 2; gbc.weightx = 1; inputPanel.add(titleLabel, gbc);
 			JLabel tieuDeONhapMaSOHK = new JLabel("Mã số:");
 			gbc.gridx = 0; gbc.gridy = 1; gbc.gridwidth = 1; gbc.weightx = 0.5; gbc.anchor = GridBagConstraints.EAST; inputPanel.add(tieuDeONhapMaSOHK, gbc);
 			JTextField oNhapMaSoHK = new JTextField();
-			gbc.gridx = 1; gbc.gridy = 1; gbc.gridwidth = 1; gbc.weightx = 0.5; gbc.anchor = GridBagConstraints.WEST; inputPanel.add(oNhapMaSoHK, gbc);
 			oNhapMaSoHK.setPreferredSize(new Dimension(200, 40));
+			gbc.gridx = 1; gbc.gridy = 1; gbc.gridwidth = 1; gbc.weightx = 0.5; gbc.anchor = GridBagConstraints.WEST; inputPanel.add(oNhapMaSoHK, gbc);
 			JButton lookUpButton = new JButton("Tra Cứu");
-			gbc.gridx = 0; gbc.gridy = 2; gbc.gridwidth = 2; gbc.weightx = 1; gbc.anchor = GridBagConstraints.CENTER; inputPanel.add(lookUpButton, gbc);
 			lookUpButton.addActionListener(new ActionListener() {
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -61,20 +60,21 @@ public class TraCuu extends JPanel {
 					}*/
 				}
 			});
+			gbc.gridx = 0; gbc.gridy = 2; gbc.gridwidth = 2; gbc.weightx = 1; gbc.anchor = GridBagConstraints.CENTER; inputPanel.add(lookUpButton, gbc);
 		
 		//Thiết lập màn hình sau tra cứu, hiển thị sổ, dùng BorderLayOut sắp xếp
 		JPanel lookupPanel = new JPanel();
 		lookupPanel.setLayout(new BorderLayout());
 			//Các component của lookupPanel
 			Book book = new Book();
-			lookupPanel.add(book, BorderLayout.CENTER);
 				//Thiết lập trang cho sách
 				Page title = new Page(Page.TYPE.COVER, null);
 				book.addPage(title);
 				Page page1 = new Page(Page.TYPE.HOUSEHOLDER, null);
 				book.addPage(page1);
+				//End thiết lập trang cho sách
+			lookupPanel.add(book, BorderLayout.CENTER);
 			JButton leftButton = new JButton("\u25c2");
-			lookupPanel.add(leftButton, BorderLayout.WEST);
 			leftButton.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -82,8 +82,8 @@ public class TraCuu extends JPanel {
 						book.showPage(book.getCurrentPageNum()-1);	
 				}
 			});
+			lookupPanel.add(leftButton, BorderLayout.WEST);
 			JButton rightButton = new JButton("\u25b8");
-			lookupPanel.add(rightButton, BorderLayout.EAST);
 			rightButton.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -91,6 +91,7 @@ public class TraCuu extends JPanel {
 						book.showPage(book.getCurrentPageNum()+1);	
 				}
 			});
+			lookupPanel.add(rightButton, BorderLayout.EAST);
 			//End các component của lookupPanel
 
 		//Thêm các thẻ của panel nhập liệu và panel tính năng vào panel tổng TraCuu, sắp xếp bằng CardLayout
