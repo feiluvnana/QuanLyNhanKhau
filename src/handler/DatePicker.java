@@ -2,11 +2,13 @@ package handler;
 
 import java.awt.event.*;
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
+
 import java.awt.*;
 
 public class DatePicker extends JPanel{
     private JComboBox<String> day, month, year;
-
+    
     public DatePicker() {
         super();
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -120,22 +122,6 @@ public class DatePicker extends JPanel{
     public boolean isDateValid(){
         if(day.getSelectedItem().equals("Ngày") || month.getSelectedItem().equals("Tháng") || year.getSelectedItem().equals("Năm"))
             return false;
-        int yy = Integer.parseInt((String) year.getSelectedItem());
-        int mm = Integer.parseInt((String) month.getSelectedItem());
-        int dd = Integer.parseInt((String) day.getSelectedItem());
-        boolean leaf = false;
-        if(yy % 400 == 0 || (yy % 100 != 0 && yy % 4 == 0))
-            leaf = true;
-        if(yy == 0)
-            leaf = false;
-        switch (mm) {
-            case 4, 6, 9, 11:
-            if(dd > 30) return false;
-            break;
-            case 2:
-            if(leaf && dd > 29) return false;
-            if((!leaf) && dd > 28) return false; 
-        }
         return true;
     }
 
