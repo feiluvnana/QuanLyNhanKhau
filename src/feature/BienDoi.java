@@ -208,76 +208,8 @@ public class BienDoi extends JPanel {
                 nutThem.addActionListener(new ActionListener(){
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        Connection conn = JDBCConnection.getConnection(URL.DB_URL, URL.DB_USER, URL.DB_PASS);
-                        String maSoHKInput = maSoHK.getText();
-                        if(maSoHKInput.equals("")) {
-                            JOptionPane.showMessageDialog(null, "Phải nhập mã sổ hộ khẩu!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-                            return;
-                        }
-                        String hoTenInput = hoTen.getText();
-                        if(hoTenInput.equals("")) {
-                            JOptionPane.showMessageDialog(null, "Phải nhập họ tên!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-                            return;
-                        }
-                        String biDanhInput = biDanh.getText();
-                        Date ngaySinhInput = Date.valueOf(ngaySinh.getYear() + "-" + ngaySinh.getMonth() + "-" + ngaySinh.getDay());   
-                        if(!ngaySinh.isValid()) {
-                            JOptionPane.showMessageDialog(null, "Phải nhập đủ ngày, tháng, năm sinh!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-                            return;
-                        }
-                        String gioiTinhInput = (String) gioiTinh.getSelectedItem();
-                        if(gioiTinh.getSelectedItem().equals("---")) {
-                            JOptionPane.showMessageDialog(null, "Phải nhập giới tính!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-                            return;
-                        }
-                        String noiSinhInput = noiSinh.getText();
-                        if(noiSinhInput.equals("")) {
-                            JOptionPane.showMessageDialog(null, "Phải nhập nơi sinh!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-                            return;
-                        }
-                        String nguyenQuanInput = nguyenQuan.getText();
-                        if(nguyenQuanInput.equals("")) {
-                            JOptionPane.showMessageDialog(null, "Phải nhập nguyên quán!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-                            return;
-                        }
-                        String danTocInput = danToc.getText();
-                        if(danTocInput.equals("")) {
-                            JOptionPane.showMessageDialog(null, "Phải nhập dân tộc!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-                            return;
-                        }
-                        String quanHeInput = quanHe.getText();
-                        if(quanHeInput.equals("")) {
-                            JOptionPane.showMessageDialog(null, "Phải nhập quan hệ với chủ hộ!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-                            return;
-                        }
-                        Date ngayDangKyInput = Date.valueOf(ngayDangKy.getYear() + "-" + ngayDangKy.getMonth() + "-" + ngayDangKy.getDay());
-                        if(!ngayDangKy.isValid()) {
-                            JOptionPane.showMessageDialog(null, "Phải nhập đủ ngày, tháng, năm đăng ký thường trú!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-                            return;
-                        }
-                        switch((String)lyDoThem.getSelectedItem()){
-                            case "Mới ra đời":
-                            try {
-                                PreparedStatement pstatement = conn.prepareStatement(QuerySample.queryThem_MoiRaDoi);
-                                pstatement.setString(1,maSoHKInput);
-                                pstatement.setString(2, hoTenInput);
-                                pstatement.setString(3, biDanhInput);
-                                pstatement.setDate(4, ngaySinhInput);
-                                pstatement.setString(5, gioiTinhInput);
-                                pstatement.setString(6, noiSinhInput);
-                                pstatement.setString(7, nguyenQuanInput);
-                                pstatement.setString(8, danTocInput);
-                                pstatement.setDate(9, ngayDangKyInput);
-                                pstatement.setString(10, "Mới sinh");
-                                pstatement.setString(11, quanHeInput);
-                                pstatement.executeUpdate();
-                            } catch (SQLException e1) {
-                                // TODO Auto-generated catch block
-                                e1.printStackTrace();
-                                JOptionPane.showMessageDialog(null, "Có lỗi xảy ra!", "Thông báo", JOptionPane.ERROR_MESSAGE);
-                            }
-                            break;
-                        }
+                        addToDB(lyDoThem, maSoHK, hoTen, biDanh, ngaySinh, gioiTinh, noiSinh, nguyenQuan, danToc, quanHe, 
+                    ngayDangKy, ngheNghiep, noiLamViec, cccd, ngayCap, noiCap, diaChiDangKyTruocDay);
                     }
                 });
                 //End item for part4
@@ -297,6 +229,159 @@ public class BienDoi extends JPanel {
             gbc.gridx = 0; gbc.gridy = 3; gbc.weightx = 1; gbc.weighty = 0.2; gbc.anchor = GridBagConstraints.CENTER; gbc.fill = GridBagConstraints.BOTH;
             this.add(part4Holder, gbc);
         }    
+    }
+
+    /**
+     * Hàm nhận tất cả thông tin nhập vào để đẩy vào csdl
+     * @return -1 nếu có lỗi nhập thiếu dữ liệu, 0 nếu thành công, 1 nếu có lỗi khác
+     */
+    private int addToDB(JComboBox<String> lyDoThem, JTextField maSoHK, JTextField hoTen, JTextField biDanh, DatePicker ngaySinh, 
+                    JComboBox<String> gioiTinh, JTextField noiSinh, JTextField nguyenQuan, JTextField danToc, JTextField quanHe, 
+                    DatePicker ngayDangKy, JTextField ngheNghiep, JTextField noiLamViec, JTextField cccd, DatePicker ngayCap,
+                    JTextField noiCap, JTextField diaChiDangKyTruocDay) {
+        Connection conn = JDBCConnection.getConnection(URL.DB_URL, URL.DB_USER, URL.DB_PASS);
+        String maSoHKInput = maSoHK.getText();
+        if(maSoHKInput.equals("")) {
+            JOptionPane.showMessageDialog(null, "Phải nhập mã sổ hộ khẩu!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            return -1;
+        }
+        String hoTenInput = hoTen.getText();
+        if(hoTenInput.equals("")) {
+        JOptionPane.showMessageDialog(null, "Phải nhập họ tên!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            return -1;
+        }
+        String biDanhInput = biDanh.getText();
+        Date ngaySinhInput = Date.valueOf(ngaySinh.getYear() + "-" + ngaySinh.getMonth() + "-" + ngaySinh.getDay());   
+        if(!ngaySinh.isValid()) {
+            JOptionPane.showMessageDialog(null, "Phải nhập đủ ngày, tháng, năm sinh!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            return -1;
+        }
+        String gioiTinhInput = (String) gioiTinh.getSelectedItem();
+        if(gioiTinh.getSelectedItem().equals("---")) {
+            JOptionPane.showMessageDialog(null, "Phải nhập giới tính!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            return -1;
+        }
+        String noiSinhInput = noiSinh.getText();
+        if(noiSinhInput.equals("")) {
+            JOptionPane.showMessageDialog(null, "Phải nhập nơi sinh!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            return -1;
+        }
+        String nguyenQuanInput = nguyenQuan.getText();
+        if(nguyenQuanInput.equals("")) {
+            JOptionPane.showMessageDialog(null, "Phải nhập nguyên quán!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            return -1;
+        }
+        String danTocInput = danToc.getText();
+        if(danTocInput.equals("")) {
+            JOptionPane.showMessageDialog(null, "Phải nhập dân tộc!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            return -1;
+        }
+        String quanHeInput = quanHe.getText();
+        if(quanHeInput.equals("")) {
+            JOptionPane.showMessageDialog(null, "Phải nhập quan hệ với chủ hộ!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            return -1;
+        }
+        Date ngayDangKyInput = Date.valueOf(ngayDangKy.getYear() + "-" + ngayDangKy.getMonth() + "-" + ngayDangKy.getDay());
+        if(!ngayDangKy.isValid()) {
+            JOptionPane.showMessageDialog(null, "Phải nhập đủ ngày, tháng, năm đăng ký thường trú!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            return -1;
+        }
+        String ngheNghiepInput = ngheNghiep.getText();
+        String noiLamViecInput = noiLamViec.getText();
+        String cccdInput = cccd.getText();
+        Date ngayCapInput = null;
+        if(ngayCap.isValid() && !lyDoThem.getSelectedItem().equals("Mới ra đời")) Date.valueOf(ngayCap.getYear() + "-" + ngayCap.getMonth() + "-" + ngayCap.getDay());
+        String noiCapInput = noiCap.getText();
+        String diaChiDangKyTruocDayInput = diaChiDangKyTruocDay.getText();
+        try {
+            PreparedStatement checkSo = conn.prepareStatement(QuerySample.queryTim_SoHK);
+            checkSo.setString(1, maSoHKInput);
+            if(!checkSo.executeQuery().next()) {
+                JOptionPane.showMessageDialog(null, "Sổ không tồn tại!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                return 1;
+            }
+        } catch (SQLException e1) {
+            JOptionPane.showMessageDialog(null, "Có lỗi xảy ra!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            e1.printStackTrace();
+        }
+        switch((String)lyDoThem.getSelectedItem()){
+            case "Mới ra đời":
+            try {
+                PreparedStatement pstatement = conn.prepareStatement(QuerySample.queryThem_MoiRaDoi);
+                pstatement.setString(1,maSoHKInput);
+                pstatement.setString(2, hoTenInput);
+                pstatement.setString(3, biDanhInput);
+                pstatement.setDate(4, ngaySinhInput);
+                pstatement.setString(5, gioiTinhInput);
+                pstatement.setString(6, noiSinhInput);
+                pstatement.setString(7, nguyenQuanInput);
+                pstatement.setString(8, danTocInput);
+                pstatement.setDate(9, ngayDangKyInput);
+                pstatement.setString(10, quanHeInput);
+                pstatement.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Thêm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                return 0;
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Có lỗi xảy ra!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            }
+            break;
+            case "Chuyển tới":
+            try {
+                PreparedStatement pstatement = conn.prepareStatement(QuerySample.queryThem_ChuyenToi);
+                pstatement.setString(1,maSoHKInput);
+                pstatement.setString(2, hoTenInput);
+                pstatement.setString(3, biDanhInput);
+                pstatement.setDate(4, ngaySinhInput);
+                pstatement.setString(5, gioiTinhInput);
+                pstatement.setString(6, noiSinhInput);
+                pstatement.setString(7, nguyenQuanInput);
+                pstatement.setString(8, danTocInput);
+                pstatement.setString(9, ngheNghiepInput);
+                pstatement.setString(10, noiLamViecInput);
+                pstatement.setString(11, cccdInput);
+                pstatement.setDate(12, ngayCapInput);
+                pstatement.setString(13, noiCapInput);
+                pstatement.setDate(14, ngayDangKyInput);
+                pstatement.setString(15, diaChiDangKyTruocDayInput);           
+                pstatement.setString(16, quanHeInput);
+                pstatement.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Thêm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                return 0;
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Có lỗi xảy ra!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            }
+            break;
+            case "Tạm trú":
+            try {
+                PreparedStatement pstatement = conn.prepareStatement(QuerySample.queryThem_TamTru);
+                pstatement.setString(1,maSoHKInput);
+                pstatement.setString(2, hoTenInput);
+                pstatement.setString(3, biDanhInput);
+                pstatement.setDate(4, ngaySinhInput);
+                pstatement.setString(5, gioiTinhInput);
+                pstatement.setString(6, noiSinhInput);
+                pstatement.setString(7, nguyenQuanInput);
+                pstatement.setString(8, danTocInput);
+                pstatement.setString(9, ngheNghiepInput);
+                pstatement.setString(10, noiLamViecInput);
+                pstatement.setString(11, cccdInput);
+                pstatement.setDate(12, ngayCapInput);
+                pstatement.setString(13, noiCapInput);
+                pstatement.setDate(14, ngayDangKyInput);
+                pstatement.setString(15, diaChiDangKyTruocDayInput);           
+                pstatement.setString(16, quanHeInput);
+                pstatement.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Thêm thành công!", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                return 0;
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Có lỗi xảy ra!", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        return 1;
+                    
     }
 }
 
