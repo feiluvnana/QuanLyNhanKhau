@@ -2,8 +2,6 @@ package handler;
 
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
-
 import java.awt.*;
 
 public class DatePicker extends JPanel{

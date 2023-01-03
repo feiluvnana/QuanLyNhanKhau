@@ -11,7 +11,7 @@ public class Frame extends JFrame{
 	LoginPage loginPage;					
 	JMenuBar menuBar;
 	TraCuu traCuu;
-	BienDoi bienDoi;
+	BienDoi_Them bienDoi;
 	ThongKe thongKe;
 	
 	public Frame()
@@ -54,7 +54,7 @@ public class Frame extends JFrame{
 				menuThemNhanKhau.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						bienDoi = new BienDoi(BienDoi.TYPE.Them);
+						bienDoi = new BienDoi_Them();
 						screenPanel.add(bienDoi, "bienDoi");
 						((CardLayout) screenPanel.getLayout()).show(screenPanel, "bienDoi");	
 					}
