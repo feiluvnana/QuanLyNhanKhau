@@ -12,7 +12,7 @@ public class JDBCConnection {
 	 * @param password
 	 * @return Connection
 	 */
-	public Connection getConnection(String url, String username, String password) {
+	public static Connection getConnection(String url, String username, String password) {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e1) {
